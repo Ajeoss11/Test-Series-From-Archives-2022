@@ -145,34 +145,6 @@ void facorials()
     }
     
 }
-vector<ll>bit(1000003);
-vector<ll>ind(1000003);
-// vector<ll>zod(1000002);
-void updateBIT(ll index,ll val,vector<ll>&BIT)
-{
-    index++;
-    index%=mod;
-    while(index<BIT.size())
-    {
-        BIT[index]+=val;
-        BIT[index]%=mod;
-        index+=(index&(-index));
-    }
-    
-}
-ll get_sum(ll index,vector<ll>&BIT)
-{
-    index++;
-    index%=mod;
-    ll sum=0;
-    while(index>0)
-    {
-        sum+=BIT[index];
-        sum%=mod;
-        index-=(index&(-index));
-    }
-    return sum;
-}
 void Solution()
 {
   string s;
