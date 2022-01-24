@@ -1,0 +1,217 @@
+// Solution by nightking__11.
+// Deshi Basara Deshi Basara 
+#include "bits/stdc++.h"
+#include <functional>
+#include<bitset>
+using namespace std;
+typedef long long ll;
+typedef long double lb;
+typedef tuple<ll,ll,ll> tpl;
+typedef char ch;
+typedef pair<ll,ll> pll;
+const unsigned gen_seed = std::chrono::system_clock::now().time_since_epoch().count();
+std::mt19937_64 gen(gen_seed);
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define all(c) (c).begin(),(c).end()
+#define srt(c) sort(all(c))
+#define rsrt(c) sort(all(c)); reverse(all(c))
+#define ac(c) accumulate(all(c),0ll);
+#define rev(c) reverse(all(c));
+#define endl '\n'
+clock_t start = clock();
+const ll INF=LLONG_MAX;
+ll mod;
+ll dx[4]={0,0,1,-1};
+ll dy[4]={1,-1,0,0};
+struct custom_hash {
+    static uint64_t splitmix64(uint64_t x) {
+        // http://xorshift.di.unimi.it/splitmix64.c
+        x += 0x9e3779b97f4a7c15;
+        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+        return x ^ (x >> 31);
+    }
+ 
+    size_t operator()(uint64_t x) const {
+        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+        return splitmix64(x + FIXED_RANDOM);
+    }
+    // by neal wu
+};
+template<typename T,typename U>
+T max(T a,U b)
+{
+    if(a>b)
+    return a;
+return b;
+}
+template<typename T,typename U>
+T min(T a,U b)
+{
+    if(a<b)
+        return a;
+    return b;
+}
+ll max(vector<ll>&a)
+{
+    ll n=a.size();
+    ll ans=-INF;
+    for(ll i=0; i<n; i++)
+        ans=max(ans,a[i]);
+    return ans;
+}
+ll min(vector<ll>&a)
+{
+    ll n=a.size();
+    ll ans=INF;
+    for(ll i=0; i<n; i++)
+        ans=min(ans,a[i]);
+    return ans;
+}
+template<typename T,typename U>
+void oned(vector<T>&A,U n)
+{  
+for (ll i = 0; i < n; ++i)
+{
+    ll val;
+    cin>>val;
+    A.push_back(val);
+}
+}
+template<typename T,typename U,typename F>
+void twod(vector<vector<T>>&A,U n, F m)
+{
+    for(ll i=0; i<n; i++)
+    {
+        for(ll j=0; j<m; j++)
+        {
+            ll val;
+            cin>> val;
+            A[i].push_back(val);
+        }
+    }
+    return ;
+}
+template<typename T>
+void print1d(vector<T> v)
+{
+       ll n=v.size();
+       for(ll i=0; i<n; i++)
+        {
+          cout<<v[i]<<" ";
+        }
+        cout<<endl;
+        return;
+}
+template<typename T>
+void print2d(vector<vector<T>> v)
+{
+   ll n=v.size();
+    for(ll i=0; i<n; i++)
+    {
+        print1d(v[i]);
+    }
+    return ;
+}
+
+ll power(ll base,ll p)
+{
+    ll res=1;
+    while(p)
+    {
+        if(p%2)
+            res=(res*base)%mod;
+        base=(base*base)%mod;
+        p/=2;
+    }
+    return res%mod;
+}
+vector<ll>fact;
+vector<ll>inv;
+void facorials()
+{
+    fact.resize((1e7)+1,1);
+    fact[0]=1;
+    fact[1]=1;
+    for(ll i=2; i<=(1e7); i++)
+    {
+        fact[i]=fact[i-1]*i; fact[i]%=mod;
+    }
+    inv.resize(1e7+1);
+    inv[1e7]=power(fact[1e7],mod-2);
+    for(ll i=1e7-1; i>=0;i--)
+    {
+        inv[i]=(inv[i+1])*(i+1)%mod;
+    }
+    
+}
+void Solution()
+{
+    ll n;
+    cin>>n;
+    vector<ll>a;
+    oned(a,n);
+    vector<ll>dp(n+1,0);
+    ll ans=0;
+   for(ll i=0; i<n; i++)
+   {
+    for(ll j=i+1; j<n; j++)
+    {
+        if(a[j]==0)
+        {
+            continue;
+        }
+        if(a[i]==0||a[j]%a[i]==0)
+        {
+            dp[j]=max(dp[j],dp[i]+a[i]);
+        }
+    }
+   }
+   for(ll i=0; i<n; i++)
+   {
+    ans=max(ans,dp[i]+a[i]);
+   }
+    cout<<ans;
+}
+int main()
+{
+   #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    freopen("error.txt","w",stderr);
+    #endif 
+
+   
+       mod=1e9+7;
+
+       // mod=998244353;
+
+      // mod=INF;
+
+        // facorials();
+
+       // sevie();
+
+
+       // memset(NCR,-1,sizeof(NCR));
+       ll one_test_case=1;
+       
+         // one_test_case=0;
+
+                if(one_test_case)
+                    Solution();
+                else{
+               ll test; cin>>test; while(test--){
+                Solution(); 
+
+                cout<<endl;
+
+           }}
+
+
+           cerr << fixed << setprecision(3);
+
+           cerr << "Time taken = " << (clock() - start) / ((double)CLOCKS_PER_SEC)*1000.0<< "ms\n";
+
+
+ };
